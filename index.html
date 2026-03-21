@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BURNING TRADE | FX自動売買 & 投資情報</title>
-  <meta name="description" content="AI自動売買Botの毎日収支公開。競輪予想・求人掲載も。">
+  <title>BURNING TRADE | FX自動売買 収支公開</title>
+  <meta name="description" content="AI自動売買Bot「Kagemusha」の毎日のトレード収支をリアルタイム公開。">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -16,9 +16,8 @@
       <button class="hamburger" onclick="document.querySelector('.nav').classList.toggle('open')">&#9776;</button>
       <ul class="nav">
         <li><a href="#fx">FX収支</a></li>
-        <li><a href="#services">サービス</a></li>
-        <li><a href="keirin/">競輪予想</a></li>
-        <li><a href="jobs/">求人掲載</a></li>
+        <li><a href="#about">Kagemushaとは</a></li>
+        <li><a href="#cta">口座開設</a></li>
         <li><a href="#contact">お問い合わせ</a></li>
       </ul>
     </div>
@@ -63,28 +62,25 @@
 
   <hr class="divider">
 
-  <!-- サービス一覧 -->
-  <section class="section" id="services">
-    <h2 class="section-title">サービス</h2>
-    <p class="section-sub">投資・副業に役立つコンテンツを提供</p>
+  <!-- Kagemushaとは -->
+  <section class="section" id="about">
+    <h2 class="section-title">Kagemushaとは</h2>
+    <p class="section-sub">独自開発のAI自動売買トレーディングBot</p>
     <div class="services-grid">
       <div class="service-card">
-        <div class="service-icon">📈</div>
-        <h3>FX自動売買 収支公開</h3>
-        <p>AI Bot「Kagemusha」の毎日のトレード結果をリアルタイム公開。完全透明な実績。</p>
-        <a href="#fx" class="btn-primary" style="padding:10px 24px; font-size:.9rem;">収支を見る</a>
+        <div class="service-icon">🤖</div>
+        <h3>完全自動トレード</h3>
+        <p>24時間365日、AIが相場を監視し自動でエントリー・決済。人間の感情に左右されないトレード。</p>
       </div>
       <div class="service-card">
-        <div class="service-icon">🚴</div>
-        <h3>競輪予想</h3>
-        <p>データ分析に基づく競輪予想を配信。無料予想と有料会員限定の精密予想。</p>
-        <a href="keirin/" class="btn-primary" style="padding:10px 24px; font-size:.9rem;">予想を見る</a>
+        <div class="service-icon">📊</div>
+        <h3>CatBoost ML搭載</h3>
+        <p>機械学習モデルによる相場分析。97の特徴量と46の戦略から最適なトレードを選択。</p>
       </div>
       <div class="service-card">
-        <div class="service-icon">💼</div>
-        <h3>求人掲載</h3>
-        <p>IT・トレード関連の求人情報を掲載。掲載希望の企業様はお問い合わせください。</p>
-        <a href="jobs/" class="btn-primary" style="padding:10px 24px; font-size:.9rem;">求人を見る</a>
+        <div class="service-icon">🛡️</div>
+        <h3>リスク管理</h3>
+        <p>サーキットブレーカー搭載。日次損失制限・ポジションサイジングで資金を守る。</p>
       </div>
     </div>
   </section>
@@ -104,7 +100,7 @@
   <!-- お問い合わせ -->
   <section class="section" id="contact">
     <h2 class="section-title">お問い合わせ</h2>
-    <p class="section-sub">求人掲載・コラボ・その他のお問い合わせはこちら</p>
+    <p class="section-sub">コラボ・その他のお問い合わせはこちら</p>
     <div style="max-width:500px;">
       <form id="contactForm" onsubmit="return handleContact(event)">
         <div style="margin-bottom:16px;">
