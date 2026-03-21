@@ -1,14 +1,20 @@
-// ── FX収支サンプルデータ（後で実データに差し替え可能） ──
+// ── FX収支データ（サンプル - 後でKagemushaから自動連携） ──
 const fxData = [
-  { date: '2026-03-21', pnl: 12450, trades: 8, wins: 6, pairs: 'GBPJPY, XAUUSD' },
-  { date: '2026-03-20', pnl: 8745, trades: 5, wins: 4, pairs: 'GBPJPY, EURJPY' },
-  { date: '2026-03-19', pnl: -3200, trades: 6, wins: 2, pairs: 'XAUUSD, USDJPY' },
-  { date: '2026-03-18', pnl: 15680, trades: 7, wins: 5, pairs: 'GBPJPY, XAUUSD' },
-  { date: '2026-03-17', pnl: 6320, trades: 4, wins: 3, pairs: 'EURJPY, GBPJPY' },
-  { date: '2026-03-16', pnl: -1500, trades: 3, wins: 1, pairs: 'USDJPY' },
-  { date: '2026-03-15', pnl: 22100, trades: 9, wins: 7, pairs: 'XAUUSD, GBPJPY, EURJPY' },
-  { date: '2026-03-14', pnl: 4890, trades: 5, wins: 3, pairs: 'GBPJPY, USDJPY' },
-  { date: '2026-03-13', pnl: 9750, trades: 6, wins: 4, pairs: 'XAUUSD, EURJPY' },
+  { date: '2026-03-21', pnl: 12450, trades: 8, wins: 6, pairs: 'GBPJPY, XAUUSD', bot: 'Kagemusha' },
+  { date: '2026-03-20', pnl: 8745, trades: 5, wins: 4, pairs: 'GBPJPY, EURJPY', bot: 'Kagemusha' },
+  { date: '2026-03-19', pnl: -3200, trades: 6, wins: 2, pairs: 'XAUUSD, USDJPY', bot: 'EA-Alpha' },
+  { date: '2026-03-18', pnl: 15680, trades: 7, wins: 5, pairs: 'GBPJPY, XAUUSD', bot: 'Kagemusha' },
+  { date: '2026-03-17', pnl: 6320, trades: 4, wins: 3, pairs: 'EURJPY, GBPJPY', bot: 'EA-Beta' },
+  { date: '2026-03-16', pnl: -1500, trades: 3, wins: 1, pairs: 'USDJPY', bot: 'Kagemusha' },
+  { date: '2026-03-15', pnl: 22100, trades: 9, wins: 7, pairs: 'XAUUSD, GBPJPY, EURJPY', bot: 'Kagemusha' },
+  { date: '2026-03-14', pnl: 4890, trades: 5, wins: 3, pairs: 'GBPJPY, USDJPY', bot: 'EA-Alpha' },
+  { date: '2026-03-13', pnl: 9750, trades: 6, wins: 4, pairs: 'XAUUSD, EURJPY', bot: 'Kagemusha' },
+  { date: '2026-03-12', pnl: -5600, trades: 4, wins: 1, pairs: 'GBPJPY', bot: 'EA-Beta' },
+  { date: '2026-03-11', pnl: 18200, trades: 8, wins: 6, pairs: 'XAUUSD, GBPJPY', bot: 'Kagemusha' },
+  { date: '2026-03-10', pnl: 7300, trades: 5, wins: 4, pairs: 'EURJPY, USDJPY', bot: 'EA-Alpha' },
+  { date: '2026-03-09', pnl: 3100, trades: 3, wins: 2, pairs: 'GBPJPY', bot: 'Kagemusha' },
+  { date: '2026-03-08', pnl: -2400, trades: 4, wins: 1, pairs: 'XAUUSD', bot: 'EA-Beta' },
+  { date: '2026-03-07', pnl: 14500, trades: 7, wins: 5, pairs: 'GBPJPY, XAUUSD', bot: 'Kagemusha' },
 ];
 
 // ── FXカード生成 ──
@@ -24,7 +30,7 @@ function renderFxCards() {
 
     return `
       <div class="fx-card">
-        <div class="fx-date">${dateStr}</div>
+        <div class="fx-date">${dateStr} <span style="color:#666; font-size:.75rem;">| ${d.bot}</span></div>
         <div class="fx-pnl ${pnlClass}">${pnlSign}${d.pnl.toLocaleString()} 円</div>
         <div class="fx-details">
           <div class="fx-detail">トレード: <span>${d.trades}回</span></div>
@@ -36,15 +42,47 @@ function renderFxCards() {
   }).join('');
 }
 
+// ── サマリー生成 ──
+function renderSummary() {
+  const row = document.getElementById('summaryRow');
+  if (!row) return;
+
+  const totalPnl = fxData.reduce((s, d) => s + d.pnl, 0);
+  const totalTrades = fxData.reduce((s, d) => s + d.trades, 0);
+  const totalWins = fxData.reduce((s, d) => s + d.wins, 0);
+  const winDays = fxData.filter(d => d.pnl > 0).length;
+  const loseDays = fxData.filter(d => d.pnl < 0).length;
+  const maxWin = Math.max(...fxData.map(d => d.pnl));
+  const maxLose = Math.min(...fxData.map(d => d.pnl));
+  const avgPnl = Math.round(totalPnl / fxData.length);
+
+  const items = [
+    { label: '累計損益', value: (totalPnl >= 0 ? '+' : '') + totalPnl.toLocaleString() + ' 円', cls: totalPnl >= 0 ? 'positive' : 'negative' },
+    { label: '勝率', value: Math.round(totalWins / totalTrades * 100) + '%', cls: 'neutral' },
+    { label: '勝ち日 / 負け日', value: `${winDays}日 / ${loseDays}日`, cls: 'neutral' },
+    { label: '1日平均損益', value: (avgPnl >= 0 ? '+' : '') + avgPnl.toLocaleString() + ' 円', cls: avgPnl >= 0 ? 'positive' : 'negative' },
+    { label: '最大利益（1日）', value: '+' + maxWin.toLocaleString() + ' 円', cls: 'positive' },
+    { label: '最大損失（1日）', value: maxLose.toLocaleString() + ' 円', cls: 'negative' },
+  ];
+
+  row.innerHTML = items.map(i => `
+    <div class="summary-item">
+      <div class="summary-label">${i.label}</div>
+      <div class="summary-value ${i.cls}">${i.value}</div>
+    </div>
+  `).join('');
+}
+
 // ── ヒーローの統計 ──
 function updateHeroStats() {
-  const totalPnl = fxData.reduce((sum, d) => sum + d.pnl, 0);
-  const totalTrades = fxData.reduce((sum, d) => sum + d.trades, 0);
-  const totalWins = fxData.reduce((sum, d) => sum + d.wins, 0);
+  const totalPnl = fxData.reduce((s, d) => s + d.pnl, 0);
+  const totalTrades = fxData.reduce((s, d) => s + d.trades, 0);
+  const totalWins = fxData.reduce((s, d) => s + d.wins, 0);
   const winRate = Math.round(totalWins / totalTrades * 100);
 
   animateNumber('totalPnl', totalPnl, true);
   animateNumber('totalTrades', totalTrades, false);
+  animateNumber('totalBalance', totalPnl, true);
   document.getElementById('winRate').textContent = winRate + '%';
 }
 
@@ -67,16 +105,209 @@ function animateNumber(id, target, isCurrency) {
     } else {
       el.textContent = current.toLocaleString();
     }
-
     if (progress < 1) requestAnimationFrame(update);
   }
   requestAnimationFrame(update);
 }
 
-// ── お問い合わせ ──
-function handleContact(e) {
+// ── 収支推移グラフ ──
+let pnlChart = null;
+function renderPnlChart() {
+  const ctx = document.getElementById('pnlChart');
+  if (!ctx) return;
+
+  const sorted = [...fxData].reverse();
+  const labels = sorted.map(d => {
+    const dt = new Date(d.date);
+    return (dt.getMonth() + 1) + '/' + dt.getDate();
+  });
+  const dailyPnl = sorted.map(d => d.pnl);
+
+  // 累計計算
+  let cumulative = [];
+  let sum = 0;
+  for (const p of dailyPnl) {
+    sum += p;
+    cumulative.push(sum);
+  }
+
+  pnlChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: '日次損益（円）',
+          data: dailyPnl,
+          backgroundColor: dailyPnl.map(v => v >= 0 ? 'rgba(102,187,106,.6)' : 'rgba(239,83,80,.6)'),
+          borderRadius: 4,
+          order: 2,
+        },
+        {
+          label: '累計損益（円）',
+          data: cumulative,
+          type: 'line',
+          borderColor: '#4fc3f7',
+          backgroundColor: 'rgba(79,195,247,.1)',
+          fill: true,
+          tension: 0.3,
+          pointRadius: 4,
+          pointBackgroundColor: '#4fc3f7',
+          order: 1,
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      interaction: { intersect: false, mode: 'index' },
+      plugins: {
+        legend: { labels: { color: '#999' } },
+        tooltip: {
+          callbacks: {
+            label: (ctx) => ctx.dataset.label + ': ' + (ctx.parsed.y >= 0 ? '+' : '') + ctx.parsed.y.toLocaleString() + ' 円'
+          }
+        }
+      },
+      scales: {
+        x: { ticks: { color: '#666' }, grid: { color: 'rgba(255,255,255,.04)' } },
+        y: {
+          ticks: {
+            color: '#666',
+            callback: v => (v >= 0 ? '+' : '') + (v / 1000).toFixed(0) + 'k'
+          },
+          grid: { color: 'rgba(255,255,255,.04)' }
+        }
+      }
+    }
+  });
+}
+
+// ── 通貨ペア別グラフ ──
+function renderPairChart() {
+  const ctx = document.getElementById('pairChart');
+  if (!ctx) return;
+
+  // 通貨ペア別集計
+  const pairPnl = {};
+  fxData.forEach(d => {
+    d.pairs.split(', ').forEach(pair => {
+      if (!pairPnl[pair]) pairPnl[pair] = 0;
+      pairPnl[pair] += Math.round(d.pnl / d.pairs.split(', ').length);
+    });
+  });
+
+  const pairs = Object.keys(pairPnl);
+  const values = Object.values(pairPnl);
+
+  new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: pairs,
+      datasets: [{
+        data: values.map(Math.abs),
+        backgroundColor: ['#4fc3f7', '#ab47bc', '#66bb6a', '#ffb74d', '#ef5350'],
+        borderWidth: 0,
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { position: 'bottom', labels: { color: '#999', padding: 16 } },
+        tooltip: {
+          callbacks: {
+            label: (ctx) => {
+              const idx = ctx.dataIndex;
+              const v = values[idx];
+              return pairs[idx] + ': ' + (v >= 0 ? '+' : '') + v.toLocaleString() + ' 円';
+            }
+          }
+        }
+      }
+    }
+  });
+}
+
+// ── Bot別グラフ ──
+function renderBotChart() {
+  const ctx = document.getElementById('botChart');
+  if (!ctx) return;
+
+  const botPnl = {};
+  fxData.forEach(d => {
+    if (!botPnl[d.bot]) botPnl[d.bot] = 0;
+    botPnl[d.bot] += d.pnl;
+  });
+
+  const bots = Object.keys(botPnl);
+  const values = Object.values(botPnl);
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: bots,
+      datasets: [{
+        label: '損益（円）',
+        data: values,
+        backgroundColor: values.map(v => v >= 0 ? 'rgba(102,187,106,.7)' : 'rgba(239,83,80,.7)'),
+        borderRadius: 8,
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: (ctx) => (ctx.parsed.x >= 0 ? '+' : '') + ctx.parsed.x.toLocaleString() + ' 円'
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: { color: '#666', callback: v => (v / 1000).toFixed(0) + 'k' },
+          grid: { color: 'rgba(255,255,255,.04)' }
+        },
+        y: { ticks: { color: '#ccc' }, grid: { display: false } }
+      }
+    }
+  });
+}
+
+// ── 統計テーブル ──
+function renderStatsTable() {
+  const tbody = document.querySelector('#statsTable tbody');
+  if (!tbody) return;
+
+  const totalPnl = fxData.reduce((s, d) => s + d.pnl, 0);
+  const totalTrades = fxData.reduce((s, d) => s + d.trades, 0);
+  const totalWins = fxData.reduce((s, d) => s + d.wins, 0);
+  const profitDays = fxData.filter(d => d.pnl > 0);
+  const lossDays = fxData.filter(d => d.pnl < 0);
+  const avgProfit = profitDays.length ? Math.round(profitDays.reduce((s, d) => s + d.pnl, 0) / profitDays.length) : 0;
+  const avgLoss = lossDays.length ? Math.round(lossDays.reduce((s, d) => s + d.pnl, 0) / lossDays.length) : 0;
+  const pf = avgLoss !== 0 ? Math.abs(avgProfit / avgLoss).toFixed(2) : '-';
+
+  const stats = [
+    ['運用期間', fxData.length + ' 日間'],
+    ['累計損益', (totalPnl >= 0 ? '+' : '') + totalPnl.toLocaleString() + ' 円'],
+    ['総トレード数', totalTrades + ' 回'],
+    ['勝率', Math.round(totalWins / totalTrades * 100) + '%'],
+    ['勝ち日数 / 負け日数', profitDays.length + ' 日 / ' + lossDays.length + ' 日'],
+    ['平均利益（勝ち日）', '+' + avgProfit.toLocaleString() + ' 円'],
+    ['平均損失（負け日）', avgLoss.toLocaleString() + ' 円'],
+    ['プロフィットファクター', pf],
+    ['稼働Bot数', '3（Kagemusha + EA-Alpha + EA-Beta）'],
+    ['取引通貨ペア', 'GBPJPY, XAUUSD, EURJPY, USDJPY'],
+  ];
+
+  tbody.innerHTML = stats.map(([k, v]) => `<tr><td>${k}</td><td>${v}</td></tr>`).join('');
+}
+
+// ── 申請フォーム ──
+function handleApply(e) {
   e.preventDefault();
-  alert('お問い合わせありがとうございます。\n内容を確認の上、ご連絡いたします。');
+  alert('参加申請ありがとうございます！\n確認でき次第、Discordの招待リンクをお送りします。');
   e.target.reset();
   return false;
 }
@@ -84,5 +315,10 @@ function handleContact(e) {
 // ── 初期化 ──
 document.addEventListener('DOMContentLoaded', () => {
   renderFxCards();
+  renderSummary();
   updateHeroStats();
+  renderPnlChart();
+  renderPairChart();
+  renderBotChart();
+  renderStatsTable();
 });

@@ -4,8 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BURNING TRADE | FX自動売買 収支公開</title>
-  <meta name="description" content="AI自動売買Bot「Kagemusha」の毎日のトレード収支をリアルタイム公開。">
+  <meta name="description" content="AI自動売買Bot「Kagemusha」の毎日のトレード収支をリアルタイム公開。Exness口座で稼働中。">
   <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
 </head>
 <body>
 
@@ -15,10 +16,11 @@
       <div class="logo">BURNING TRADE</div>
       <button class="hamburger" onclick="document.querySelector('.nav').classList.toggle('open')">&#9776;</button>
       <ul class="nav">
-        <li><a href="#fx">FX収支</a></li>
-        <li><a href="#about">Kagemushaとは</a></li>
-        <li><a href="#cta">口座開設</a></li>
-        <li><a href="#contact">お問い合わせ</a></li>
+        <li><a href="#daily">毎日収支</a></li>
+        <li><a href="#chart">収支グラフ</a></li>
+        <li><a href="#analysis">分析</a></li>
+        <li><a href="#about">Botについて</a></li>
+        <li><a href="#join">シグナル参加</a></li>
       </ul>
     </div>
   </header>
@@ -27,7 +29,7 @@
   <section class="hero">
     <div>
       <h1>AIが24時間トレードする時代</h1>
-      <p>独自開発のAI自動売買Bot「Kagemusha」が、毎日リアルタイムでトレード。収支を全て公開しています。</p>
+      <p>独自開発のAI自動売買Bot + 複数EAがExness口座で24時間稼働中。<br>全トレードの収支を完全公開しています。</p>
       <div class="hero-stats">
         <div class="stat">
           <div class="stat-num" id="totalPnl">+0</div>
@@ -41,22 +43,83 @@
           <div class="stat-num" id="winRate">0%</div>
           <div class="stat-label">勝率</div>
         </div>
+        <div class="stat">
+          <div class="stat-num" id="totalBalance">0</div>
+          <div class="stat-label">累計収支（円）</div>
+        </div>
       </div>
-      <a href="#fx" class="btn-primary">収支を見る</a>
+      <a href="#join" class="btn-primary">シグナル配信に参加する</a>
     </div>
   </section>
 
   <hr class="divider">
 
-  <!-- FX毎日収支 -->
-  <section class="section" id="fx">
-    <h2 class="section-title">FX 毎日収支</h2>
-    <p class="section-sub">Kagemusha Trading Botのリアルトレード実績を毎日更新</p>
+  <!-- 累計収支グラフ -->
+  <section class="section" id="chart">
+    <h2 class="section-title">収支推移グラフ</h2>
+    <p class="section-sub">日次損益と累計収支の推移</p>
+    <div style="background:rgba(255,255,255,.03); border-radius:16px; padding:24px; border:1px solid rgba(255,255,255,.06);">
+      <canvas id="pnlChart" height="300"></canvas>
+    </div>
+    <div style="display:flex; gap:20px; margin-top:20px; flex-wrap:wrap;">
+      <button class="chart-tab active" onclick="setChartRange('month')">今月</button>
+      <button class="chart-tab" onclick="setChartRange('all')">全期間</button>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- 毎日収支 -->
+  <section class="section" id="daily">
+    <h2 class="section-title">毎日のトレード収支</h2>
+    <p class="section-sub">全トレード（Kagemusha Bot + EA）のリアル実績を毎日更新</p>
+
+    <!-- サマリーカード -->
+    <div class="summary-row" id="summaryRow">
+      <!-- JSで生成 -->
+    </div>
+
+    <!-- 日別カード -->
     <div class="fx-grid" id="fxGrid">
       <!-- JSで動的生成 -->
     </div>
-    <div style="text-align:center; margin-top:40px;">
-      <a href="#cta" class="btn-primary">同じ環境でトレードを始める</a>
+  </section>
+
+  <hr class="divider">
+
+  <!-- 分析セクション -->
+  <section class="section" id="analysis">
+    <h2 class="section-title">トレード分析</h2>
+    <p class="section-sub">通貨ペア別・Bot別のパフォーマンス詳細</p>
+
+    <div class="analysis-grid">
+      <!-- 通貨ペア別 -->
+      <div class="analysis-card">
+        <h3>通貨ペア別 損益</h3>
+        <canvas id="pairChart" height="250"></canvas>
+      </div>
+
+      <!-- Bot/EA別 -->
+      <div class="analysis-card">
+        <h3>Bot / EA別 損益</h3>
+        <canvas id="botChart" height="250"></canvas>
+      </div>
+    </div>
+
+    <!-- 統計テーブル -->
+    <div class="stats-table-wrap" style="margin-top:32px;">
+      <h3 style="color:#fff; margin-bottom:16px;">詳細統計</h3>
+      <table class="stats-table" id="statsTable">
+        <thead>
+          <tr>
+            <th>項目</th>
+            <th>値</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- JSで生成 -->
+        </tbody>
+      </table>
     </div>
   </section>
 
@@ -64,58 +127,88 @@
 
   <!-- Kagemushaとは -->
   <section class="section" id="about">
-    <h2 class="section-title">Kagemushaとは</h2>
-    <p class="section-sub">独自開発のAI自動売買トレーディングBot</p>
+    <h2 class="section-title">稼働中のBot & EA</h2>
+    <p class="section-sub">Exness口座で24時間自動トレード</p>
     <div class="services-grid">
       <div class="service-card">
         <div class="service-icon">🤖</div>
-        <h3>完全自動トレード</h3>
-        <p>24時間365日、AIが相場を監視し自動でエントリー・決済。人間の感情に左右されないトレード。</p>
+        <h3>Kagemusha Bot</h3>
+        <p>CatBoost機械学習搭載の自動売買Bot。97特徴量 x 46戦略でエントリーポイントを算出。サーキットブレーカーでリスク管理。</p>
       </div>
       <div class="service-card">
-        <div class="service-icon">📊</div>
-        <h3>CatBoost ML搭載</h3>
-        <p>機械学習モデルによる相場分析。97の特徴量と46の戦略から最適なトレードを選択。</p>
+        <div class="service-icon">📈</div>
+        <h3>EA群（複数稼働）</h3>
+        <p>Kagemusha以外にも複数のEAが同一口座で稼働中。全てのトレードをDiscordにリアルタイム通知。</p>
       </div>
       <div class="service-card">
-        <div class="service-icon">🛡️</div>
-        <h3>リスク管理</h3>
-        <p>サーキットブレーカー搭載。日次損失制限・ポジションサイジングで資金を守る。</p>
+        <div class="service-icon">🔔</div>
+        <h3>Discord通知</h3>
+        <p>新規注文・決済・注文変更など全てのアクションをDiscordにリアルタイム配信。完全透明な運用。</p>
       </div>
     </div>
   </section>
 
   <hr class="divider">
 
-  <!-- CTA (IBアフィリエイト誘導) -->
-  <section class="cta-section" id="cta">
-    <h2>Kagemushaと同じ環境でトレードを始めよう</h2>
-    <p>Exness口座を開設して、AI自動売買の世界へ。<br>低スプレッド・無制限レバレッジ・高速約定。</p>
-    <a href="#" class="btn-primary" id="affiliateLink">無料で口座開設する（Exness）</a>
-    <p style="margin-top:16px; font-size:.75rem; color:#666;">※ アフィリエイトリンクです</p>
-  </section>
+  <!-- シグナル参加CTA -->
+  <section class="section" id="join">
+    <h2 class="section-title">シグナル配信に参加する</h2>
+    <p class="section-sub">Discordでリアルタイムのトレード通知を受け取ろう</p>
 
-  <hr class="divider">
+    <div class="join-flow">
+      <div class="flow-step">
+        <div class="flow-num">1</div>
+        <div class="flow-content">
+          <h3>Exness口座を開設</h3>
+          <p>下のリンクからExness口座を開設（無料）。低スプレッド・無制限レバレッジ・高速約定。</p>
+          <a href="#" class="btn-primary" id="affiliateLink" style="margin-top:12px;">無料で口座開設する</a>
+          <p style="margin-top:8px; font-size:.7rem; color:#666;">※ アフィリエイトリンクです</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">2</div>
+        <div class="flow-content">
+          <h3>入金する</h3>
+          <p>開設した口座に入金。最低入金額からスタートOK。</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">3</div>
+        <div class="flow-content">
+          <h3>参加申請する</h3>
+          <p>下のフォームからExness口座番号を送信。こちらで確認でき次第、Discordシグナル配信チャンネルに招待します。</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">4</div>
+        <div class="flow-content">
+          <h3>Discordでシグナル受信開始</h3>
+          <p>全トレードのリアルタイム通知を受信。エントリー・決済・損益が即座にわかる。</p>
+        </div>
+      </div>
+    </div>
 
-  <!-- お問い合わせ -->
-  <section class="section" id="contact">
-    <h2 class="section-title">お問い合わせ</h2>
-    <p class="section-sub">コラボ・その他のお問い合わせはこちら</p>
-    <div style="max-width:500px;">
-      <form id="contactForm" onsubmit="return handleContact(event)">
-        <div style="margin-bottom:16px;">
-          <label style="display:block; font-size:.85rem; color:#999; margin-bottom:6px;">お名前</label>
-          <input type="text" required style="width:100%; padding:12px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); border-radius:8px; color:#fff; font-size:1rem;">
+    <!-- 申請フォーム -->
+    <div class="apply-form-wrap" id="apply">
+      <h3>シグナル配信 参加申請</h3>
+      <form id="applyForm" onsubmit="return handleApply(event)">
+        <div class="form-group">
+          <label>お名前（ニックネーム可）</label>
+          <input type="text" required>
         </div>
-        <div style="margin-bottom:16px;">
-          <label style="display:block; font-size:.85rem; color:#999; margin-bottom:6px;">メールアドレス</label>
-          <input type="email" required style="width:100%; padding:12px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); border-radius:8px; color:#fff; font-size:1rem;">
+        <div class="form-group">
+          <label>メールアドレス</label>
+          <input type="email" required>
         </div>
-        <div style="margin-bottom:16px;">
-          <label style="display:block; font-size:.85rem; color:#999; margin-bottom:6px;">お問い合わせ内容</label>
-          <textarea rows="5" required style="width:100%; padding:12px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); border-radius:8px; color:#fff; font-size:1rem; resize:vertical;"></textarea>
+        <div class="form-group">
+          <label>Exness口座番号</label>
+          <input type="text" required placeholder="例: 12345678">
         </div>
-        <button type="submit" class="btn-primary" style="border:none; cursor:pointer; width:100%;">送信する</button>
+        <div class="form-group">
+          <label>Discord ID</label>
+          <input type="text" required placeholder="例: username#1234">
+        </div>
+        <button type="submit" class="btn-primary" style="border:none; cursor:pointer; width:100%;">参加申請する</button>
       </form>
     </div>
   </section>
@@ -123,6 +216,7 @@
   <!-- フッター -->
   <footer class="footer">
     <p>&copy; 2026 BURNING TRADE. All rights reserved.</p>
+    <p style="margin-top:8px; font-size:.75rem;">当サイトはアフィリエイトプログラムに参加しています。投資にはリスクが伴います。</p>
   </footer>
 
   <script src="js/main.js"></script>
