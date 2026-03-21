@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BURNING TRADE | FX自動売買 & 投資情報</title>
+  <meta name="description" content="AI自動売買Botの毎日収支公開。競輪予想・求人掲載も。">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ヘッダー -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo">BURNING TRADE</div>
+      <button class="hamburger" onclick="document.querySelector('.nav').classList.toggle('open')">&#9776;</button>
+      <ul class="nav">
+        <li><a href="#fx">FX収支</a></li>
+        <li><a href="#services">サービス</a></li>
+        <li><a href="keirin/">競輪予想</a></li>
+        <li><a href="jobs/">求人掲載</a></li>
+        <li><a href="#contact">お問い合わせ</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- ヒーロー -->
+  <section class="hero">
+    <div>
+      <h1>AIが24時間トレードする時代</h1>
+      <p>独自開発のAI自動売買Bot「Kagemusha」が、毎日リアルタイムでトレード。収支を全て公開しています。</p>
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-num" id="totalPnl">+0</div>
+          <div class="stat-label">今月の収益（円）</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num" id="totalTrades">0</div>
+          <div class="stat-label">総トレード数</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num" id="winRate">0%</div>
+          <div class="stat-label">勝率</div>
+        </div>
+      </div>
+      <a href="#fx" class="btn-primary">収支を見る</a>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- FX毎日収支 -->
+  <section class="section" id="fx">
+    <h2 class="section-title">FX 毎日収支</h2>
+    <p class="section-sub">Kagemusha Trading Botのリアルトレード実績を毎日更新</p>
+    <div class="fx-grid" id="fxGrid">
+      <!-- JSで動的生成 -->
+    </div>
+    <div style="text-align:center; margin-top:40px;">
+      <a href="#cta" class="btn-primary">同じ環境でトレードを始める</a>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- サービス一覧 -->
+  <section class="section" id="services">
+    <h2 class="section-title">サービス</h2>
+    <p class="section-sub">投資・副業に役立つコンテンツを提供</p>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">📈</div>
+        <h3>FX自動売買 収支公開</h3>
+        <p>AI Bot「Kagemusha」の毎日のトレード結果をリアルタイム公開。完全透明な実績。</p>
+        <a href="#fx" class="btn-primary" style="padding:10px 24px; font-size:.9rem;">収支を見る</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🚴</div>
+        <h3>競輪予想</h3>
+        <p>データ分析に基づく競輪予想を配信。無料予想と有料会員限定の精密予想。</p>
+        <a href="keirin/" class="btn-primary" style="padding:10px 24px; font-size:.9rem;">予想を見る</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">💼</div>
+        <h3>求人掲載</h3>
+        <p>IT・トレード関連の求人情報を掲載。掲載希望の企業様はお問い合わせください。</p>
+        <a href="jobs/" class="btn-primary" style="padding:10px 24px; font-size:.9rem;">求人を見る</a>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- CTA (IBアフィリエイト誘導) -->
+  <section class="cta-section" id="cta">
+    <h2>Kagemushaと同じ環境でトレードを始めよう</h2>
+    <p>Exness口座を開設して、AI自動売買の世界へ。<br>低スプレッド・無制限レバレッジ・高速約定。</p>
+    <a href="#" class="btn-primary" id="affiliateLink">無料で口座開設する（Exness）</a>
+    <p style="margin-top:16px; font-size:.75rem; color:#666;">※ アフィリエイトリンクです</p>
+  </section>
+
+  <hr class="divider">
+
+  <!-- お問い合わせ -->
+  <section class="section" id="contact">
+    <h2 class="section-title">お問い合わせ</h2>
+    <p class="section-sub">求人掲載・コラボ・その他のお問い合わせはこちら</p>
+    <div style="max-width:500px;">
+      <form id="contactForm" onsubmit="return handleContact(event)">
+        <div style="margin-bottom:16px;">
+          <label style="display:block; font-size:.85rem; color:#999; margin-bottom:6px;">お名前</label>
+          <input type="text" required style="width:100%; padding:12px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); border-radius:8px; color:#fff; font-size:1rem;">
+        </div>
+        <div style="margin-bottom:16px;">
+          <label style="display:block; font-size:.85rem; color:#999; margin-bottom:6px;">メールアドレス</label>
+          <input type="email" required style="width:100%; padding:12px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); border-radius:8px; color:#fff; font-size:1rem;">
+        </div>
+        <div style="margin-bottom:16px;">
+          <label style="display:block; font-size:.85rem; color:#999; margin-bottom:6px;">お問い合わせ内容</label>
+          <textarea rows="5" required style="width:100%; padding:12px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); border-radius:8px; color:#fff; font-size:1rem; resize:vertical;"></textarea>
+        </div>
+        <button type="submit" class="btn-primary" style="border:none; cursor:pointer; width:100%;">送信する</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- フッター -->
+  <footer class="footer">
+    <p>&copy; 2026 BURNING TRADE. All rights reserved.</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
