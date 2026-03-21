@@ -1,20 +1,6 @@
 // ── FX収支データ（サンプル - 後でKagemushaから自動連携） ──
 const fxData = [
-  { date: '2026-03-21', pnl: 12450, trades: 8, wins: 6, pairs: 'GBPJPY, XAUUSD', bot: 'Kagemusha' },
-  { date: '2026-03-20', pnl: 8745, trades: 5, wins: 4, pairs: 'GBPJPY, EURJPY', bot: 'Kagemusha' },
-  { date: '2026-03-19', pnl: -3200, trades: 6, wins: 2, pairs: 'XAUUSD, USDJPY', bot: 'EA-Alpha' },
-  { date: '2026-03-18', pnl: 15680, trades: 7, wins: 5, pairs: 'GBPJPY, XAUUSD', bot: 'Kagemusha' },
-  { date: '2026-03-17', pnl: 6320, trades: 4, wins: 3, pairs: 'EURJPY, GBPJPY', bot: 'EA-Beta' },
-  { date: '2026-03-16', pnl: -1500, trades: 3, wins: 1, pairs: 'USDJPY', bot: 'Kagemusha' },
-  { date: '2026-03-15', pnl: 22100, trades: 9, wins: 7, pairs: 'XAUUSD, GBPJPY, EURJPY', bot: 'Kagemusha' },
-  { date: '2026-03-14', pnl: 4890, trades: 5, wins: 3, pairs: 'GBPJPY, USDJPY', bot: 'EA-Alpha' },
-  { date: '2026-03-13', pnl: 9750, trades: 6, wins: 4, pairs: 'XAUUSD, EURJPY', bot: 'Kagemusha' },
-  { date: '2026-03-12', pnl: -5600, trades: 4, wins: 1, pairs: 'GBPJPY', bot: 'EA-Beta' },
-  { date: '2026-03-11', pnl: 18200, trades: 8, wins: 6, pairs: 'XAUUSD, GBPJPY', bot: 'Kagemusha' },
-  { date: '2026-03-10', pnl: 7300, trades: 5, wins: 4, pairs: 'EURJPY, USDJPY', bot: 'EA-Alpha' },
-  { date: '2026-03-09', pnl: 3100, trades: 3, wins: 2, pairs: 'GBPJPY', bot: 'Kagemusha' },
-  { date: '2026-03-08', pnl: -2400, trades: 4, wins: 1, pairs: 'XAUUSD', bot: 'EA-Beta' },
-  { date: '2026-03-07', pnl: 14500, trades: 7, wins: 5, pairs: 'GBPJPY, XAUUSD', bot: 'Kagemusha' },
+  { date: '2026-03-20', pnl: 3561, trades: 2, wins: 1, pairs: 'EURJPY, GBPJPY', bot: 'Confluence' }
 ];
 
 // ── FXカード生成 ──
