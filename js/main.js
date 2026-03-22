@@ -38,8 +38,10 @@ function renderSummary() {
   const totalWins = fxData.reduce((s, d) => s + d.wins, 0);
   const winDays = fxData.filter(d => d.pnl > 0).length;
   const loseDays = fxData.filter(d => d.pnl < 0).length;
-  const maxWin = Math.max(...fxData.map(d => d.pnl));
-  const maxLose = Math.min(...fxData.map(d => d.pnl));
+  const profitDaysData = fxData.filter(d => d.pnl > 0);
+  const lossDaysData = fxData.filter(d => d.pnl < 0);
+  const maxWin = profitDaysData.length ? Math.max(...profitDaysData.map(d => d.pnl)) : 0;
+  const maxLose = lossDaysData.length ? Math.min(...lossDaysData.map(d => d.pnl)) : 0;
   const avgPnl = Math.round(totalPnl / fxData.length);
 
   const items = [
@@ -48,7 +50,7 @@ function renderSummary() {
     { label: '勝ち日 / 負け日', value: `${winDays}日 / ${loseDays}日`, cls: 'neutral' },
     { label: '1日平均損益', value: (avgPnl >= 0 ? '+' : '') + avgPnl.toLocaleString() + ' 円', cls: avgPnl >= 0 ? 'positive' : 'negative' },
     { label: '最大利益（1日）', value: '+' + maxWin.toLocaleString() + ' 円', cls: 'positive' },
-    { label: '最大損失（1日）', value: maxLose.toLocaleString() + ' 円', cls: 'negative' },
+    { label: '最大損失（1日）', value: maxLose === 0 ? '0 円' : maxLose.toLocaleString() + ' 円', cls: maxLose === 0 ? 'neutral' : 'negative' },
   ];
 
   row.innerHTML = items.map(i => `
