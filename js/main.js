@@ -1,5 +1,6 @@
 // ── FX収支データ（サンプル - 後でKagemushaから自動連携） ──
 const fxData = [
+  { date: '2026-03-23', pnl: -4369, trades: 2, wins: 0, pairs: 'EURJPY, GBPJPY', bot: 'Confluence' },
   { date: '2026-03-20', pnl: 3561, trades: 2, wins: 1, pairs: 'EURJPY, GBPJPY', bot: 'Confluence' }
 ];
 
