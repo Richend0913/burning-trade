@@ -1,6 +1,11 @@
 // ── FX収支データ V2（2026-03-26〜 新ロジック） ──
 // V1は勝率27%・損大利小で撤退。V2はR:R 2.0、confidence 0.75、EURUSD+GBPUSDのみ
 const fxData = [
+  { date: '2026-03-26', pnl: -9486, trades: 9, wins: 3, pairs: 'BTCUSD, EURJPY, EURUSD, GBPUSD, USDJPY', bot: 'Confluence / [sl' },
+  { date: '2026-03-25', pnl: -1246, trades: 7, wins: 4, pairs: 'EURJPY, EURUSD, GBPJPY, GBPUSD, USDJPY', bot: 'Confluence' },
+  { date: '2026-03-24', pnl: -7289, trades: 3, wins: 0, pairs: 'EURUSD, GBPJPY, GBPUSD', bot: 'Confluence' },
+  { date: '2026-03-23', pnl: -4369, trades: 2, wins: 0, pairs: 'EURJPY, GBPJPY', bot: 'Confluence' },
+  { date: '2026-03-20', pnl: 3561, trades: 2, wins: 1, pairs: 'EURJPY, GBPJPY', bot: 'Confluence' }
 ];
 
 // ── FXカード生成 ──
