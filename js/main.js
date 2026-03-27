@@ -297,6 +297,152 @@ function renderStatsTable() {
   tbody.innerHTML = stats.map(([k, v]) => `<tr><td>${k}</td><td>${v}</td></tr>`).join('');
 }
 
+// ── Bot別トレードデータ（自動更新スクリプトが書き換える） ──
+const botTradeData = [
+];
+
+// ── Bot別 収益曲線 ──
+function renderEquityCurve() {
+  const ctx = document.getElementById('equityCurveChart');
+  if (!ctx) return;
+
+  // Bot別にグループ化
+  const botData = {};
+  botTradeData.forEach(d => {
+    if (!botData[d.bot]) botData[d.bot] = [];
+    botData[d.bot].push(d);
+  });
+
+  // 日付でソート & 累計計算
+  const allDates = [...new Set(botTradeData.map(d => d.date))].sort();
+
+  const colors = {
+    'Confluence': { line: '#4fc3f7', bg: 'rgba(79,195,247,.1)' },
+    'BAv3': { line: '#66bb6a', bg: 'rgba(102,187,106,.1)' },
+  };
+  const defaultColors = [
+    { line: '#ab47bc', bg: 'rgba(171,71,188,.1)' },
+    { line: '#ffb74d', bg: 'rgba(255,183,77,.1)' },
+    { line: '#ef5350', bg: 'rgba(239,83,80,.1)' },
+    { line: '#26c6da', bg: 'rgba(38,198,218,.1)' },
+  ];
+
+  const datasets = [];
+  let colorIdx = 0;
+
+  // Total equity curve
+  const totalByDate = {};
+  allDates.forEach(d => totalByDate[d] = 0);
+
+  Object.keys(botData).forEach(bot => {
+    const trades = botData[bot].sort((a, b) => a.date.localeCompare(b.date));
+    const dailyPnl = {};
+    trades.forEach(t => {
+      if (!dailyPnl[t.date]) dailyPnl[t.date] = 0;
+      dailyPnl[t.date] += t.pnl;
+    });
+
+    // Cumulative
+    let cum = 0;
+    const cumData = allDates.map(d => {
+      cum += (dailyPnl[d] || 0);
+      totalByDate[d] += (dailyPnl[d] || 0);
+      return cum;
+    });
+
+    const c = colors[bot] || defaultColors[colorIdx++ % defaultColors.length];
+    datasets.push({
+      label: bot,
+      data: cumData,
+      borderColor: c.line,
+      backgroundColor: c.bg,
+      fill: false,
+      tension: 0.3,
+      pointRadius: 3,
+      pointBackgroundColor: c.line,
+      borderWidth: 2,
+    });
+  });
+
+  // Total line
+  let totalCum = 0;
+  const totalData = allDates.map(d => {
+    totalCum += totalByDate[d];
+    return totalCum;
+  });
+  datasets.push({
+    label: '合計',
+    data: totalData,
+    borderColor: '#fff',
+    backgroundColor: 'rgba(255,255,255,.05)',
+    fill: true,
+    tension: 0.3,
+    pointRadius: 0,
+    borderWidth: 3,
+    borderDash: [6, 3],
+  });
+
+  const labels = allDates.map(d => {
+    const dt = new Date(d);
+    return (dt.getMonth() + 1) + '/' + dt.getDate();
+  });
+
+  new Chart(ctx, {
+    type: 'line',
+    data: { labels, datasets },
+    options: {
+      responsive: true,
+      interaction: { intersect: false, mode: 'index' },
+      plugins: {
+        legend: {
+          labels: { color: '#ccc', usePointStyle: true, pointStyle: 'circle', padding: 20 }
+        },
+        tooltip: {
+          callbacks: {
+            label: (ctx) => ctx.dataset.label + ': ' + (ctx.parsed.y >= 0 ? '+' : '') + ctx.parsed.y.toLocaleString() + ' 円'
+          }
+        }
+      },
+      scales: {
+        x: { ticks: { color: '#666' }, grid: { color: 'rgba(255,255,255,.04)' } },
+        y: {
+          ticks: {
+            color: '#666',
+            callback: v => (v >= 0 ? '+' : '') + (v / 1000).toFixed(0) + 'k'
+          },
+          grid: { color: 'rgba(255,255,255,.04)' }
+        }
+      }
+    }
+  });
+
+  // Bot別サマリーカード
+  renderBotSummaryCards(botData);
+}
+
+function renderBotSummaryCards(botData) {
+  const container = document.getElementById('botSummaryCards');
+  if (!container) return;
+
+  const cards = Object.keys(botData).map(bot => {
+    const trades = botData[bot];
+    const totalPnl = trades.reduce((s, t) => s + t.pnl, 0);
+    const totalTrades = trades.length;
+    const wins = trades.filter(t => t.pnl > 0).length;
+    const wr = totalTrades > 0 ? Math.round(wins / totalTrades * 100) : 0;
+    const pnlClass = totalPnl >= 0 ? 'color:#66bb6a' : 'color:#ef5350';
+    const sign = totalPnl >= 0 ? '+' : '';
+
+    return `<div style="flex:1; min-width:160px; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.06); border-radius:12px; padding:16px;">
+      <div style="font-size:.75rem; color:#999; margin-bottom:4px;">${bot}</div>
+      <div style="font-size:1.2rem; font-weight:700; ${pnlClass}">${sign}${totalPnl.toLocaleString()} 円</div>
+      <div style="font-size:.75rem; color:#666; margin-top:8px;">${totalTrades}トレード | 勝率 ${wr}%</div>
+    </div>`;
+  }).join('');
+
+  container.innerHTML = cards;
+}
+
 // ── 申請フォーム ──
 function handleApply(e) {
   e.preventDefault();
@@ -307,6 +453,7 @@ function handleApply(e) {
 
 // ── 初期化 ──
 document.addEventListener('DOMContentLoaded', () => {
+  renderEquityCurve();
   renderFxCards();
   renderSummary();
   updateHeroStats();
