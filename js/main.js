@@ -1,12 +1,6 @@
-// ── FX収支データ V2（2026-03-26〜 新ロジック） ──
-// V1は勝率27%・損大利小で撤退。V2はR:R 2.0、confidence 0.75、EURUSD+GBPUSDのみ
+// ── FX収支データ V3（2026-03-28〜 新デモ口座 4EA並行運用） ──
+// BAv3, BAv3.1, Strategy26_v3, BurningAlpha FINAL
 const fxData = [
-  { date: '2026-03-27', pnl: -1638, trades: 7, wins: 2, pairs: 'BTCUSD, XAUUSD', bot: 'BAv3' },
-  { date: '2026-03-26', pnl: 17191, trades: 12, wins: 6, pairs: 'BTCUSD, EURJPY, EURUSD, GBPUSD, USDJPY, XAUUSD', bot: 'BAv3 / Kagemusha' },
-  { date: '2026-03-25', pnl: -1246, trades: 7, wins: 4, pairs: 'EURJPY, EURUSD, GBPJPY, GBPUSD, USDJPY', bot: 'Kagemusha' },
-  { date: '2026-03-24', pnl: -7289, trades: 3, wins: 0, pairs: 'EURUSD, GBPJPY, GBPUSD', bot: 'Kagemusha' },
-  { date: '2026-03-23', pnl: -4369, trades: 2, wins: 0, pairs: 'EURJPY, GBPJPY', bot: 'Kagemusha' },
-  { date: '2026-03-20', pnl: 3561, trades: 2, wins: 1, pairs: 'EURJPY, GBPJPY', bot: 'Kagemusha' }
 ];
 
 // ── FXカード生成 ──
@@ -291,8 +285,8 @@ function renderStatsTable() {
     ['平均利益（勝ち日）', '+' + avgProfit.toLocaleString() + ' 円'],
     ['平均損失（負け日）', avgLoss.toLocaleString() + ' 円'],
     ['プロフィットファクター', pf],
-    ['稼働Bot数', '1（Kagemusha V2 Multi-Confluence）'],
-    ['取引通貨ペア', 'EURUSD, GBPUSD'],
+    ['稼働Bot数', '4（BAv3 / BAv3.1 / S26v3 / BA-FINAL）'],
+    ['取引通貨ペア', 'EURUSD, GBPUSD, USDJPY, AUDUSD, BTCUSD'],
   ];
 
   tbody.innerHTML = stats.map(([k, v]) => `<tr><td>${k}</td><td>${v}</td></tr>`).join('');
@@ -300,39 +294,6 @@ function renderStatsTable() {
 
 // ── Bot別トレードデータ（自動更新スクリプトが書き換える） ──
 const botTradeData = [
-  { date: '2026-03-20', pnl: -327, bot: 'Kagemusha', symbol: 'GBPJPY' },
-  { date: '2026-03-20', pnl: 3888, bot: 'Kagemusha', symbol: 'EURJPY' },
-  { date: '2026-03-23', pnl: -1473, bot: 'Kagemusha', symbol: 'GBPJPY' },
-  { date: '2026-03-23', pnl: -2896, bot: 'Kagemusha', symbol: 'EURJPY' },
-  { date: '2026-03-24', pnl: -1412, bot: 'Kagemusha', symbol: 'GBPJPY' },
-  { date: '2026-03-24', pnl: -2110, bot: 'Kagemusha', symbol: 'GBPUSD' },
-  { date: '2026-03-24', pnl: -3767, bot: 'Kagemusha', symbol: 'EURUSD' },
-  { date: '2026-03-25', pnl: -577, bot: 'Kagemusha', symbol: 'GBPUSD' },
-  { date: '2026-03-25', pnl: -466, bot: 'Kagemusha', symbol: 'EURUSD' },
-  { date: '2026-03-25', pnl: 66, bot: 'Kagemusha', symbol: 'EURJPY' },
-  { date: '2026-03-25', pnl: 42, bot: 'Kagemusha', symbol: 'GBPJPY' },
-  { date: '2026-03-25', pnl: -486, bot: 'Kagemusha', symbol: 'EURJPY' },
-  { date: '2026-03-25', pnl: 52, bot: 'Kagemusha', symbol: 'GBPJPY' },
-  { date: '2026-03-25', pnl: 123, bot: 'Kagemusha', symbol: 'USDJPY' },
-  { date: '2026-03-26', pnl: -438, bot: 'Kagemusha', symbol: 'EURJPY' },
-  { date: '2026-03-26', pnl: 35, bot: 'Kagemusha', symbol: 'GBPUSD' },
-  { date: '2026-03-26', pnl: -842, bot: 'Kagemusha', symbol: 'EURUSD' },
-  { date: '2026-03-26', pnl: 680, bot: 'Kagemusha', symbol: 'GBPUSD' },
-  { date: '2026-03-26', pnl: -686, bot: 'Kagemusha', symbol: 'GBPUSD' },
-  { date: '2026-03-26', pnl: -7832, bot: 'BAv3', symbol: 'BTCUSD' },
-  { date: '2026-03-26', pnl: 291, bot: 'Kagemusha', symbol: 'USDJPY' },
-  { date: '2026-03-26', pnl: -541, bot: 'Kagemusha', symbol: 'EURUSD' },
-  { date: '2026-03-26', pnl: -153, bot: 'Kagemusha', symbol: 'GBPUSD' },
-  { date: '2026-03-26', pnl: 10650, bot: 'BAv3', symbol: 'USDJPY' },
-  { date: '2026-03-26', pnl: 5697, bot: 'BAv3', symbol: 'EURUSD' },
-  { date: '2026-03-26', pnl: 10330, bot: 'BAv3', symbol: 'XAUUSD' },
-  { date: '2026-03-27', pnl: -7139, bot: 'BAv3', symbol: 'XAUUSD' },
-  { date: '2026-03-27', pnl: 9281, bot: 'BAv3', symbol: 'BTCUSD' },
-  { date: '2026-03-27', pnl: -9033, bot: 'BAv3', symbol: 'BTCUSD' },
-  { date: '2026-03-27', pnl: 26066, bot: 'BAv3', symbol: 'BTCUSD' },
-  { date: '2026-03-27', pnl: -29, bot: 'BAv3', symbol: 'XAUUSD' },
-  { date: '2026-03-27', pnl: -10398, bot: 'BAv3', symbol: 'XAUUSD' },
-  { date: '2026-03-27', pnl: -10386, bot: 'BAv3', symbol: 'XAUUSD' }
 ];
 
 // ── Bot別 収益曲線 ──
