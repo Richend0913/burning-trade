@@ -1,6 +1,7 @@
 // ── FX収支データ V3（2026-03-28〜 新デモ口座 4EA並行運用） ──
 // BAv3, BAv3.1, Strategy26_v3, BurningAlpha FINAL
 const fxData = [
+  { date: '2026-03-29', pnl: -4192, trades: 2, wins: 1, pairs: 'BTCUSD', bot: 'BAv3' },
   { date: '2026-03-28', pnl: -7744, trades: 1, wins: 0, pairs: 'BTCUSD', bot: 'BAv3' },
   { date: '2026-03-27', pnl: -11902, trades: 3, wins: 0, pairs: 'BTCUSD, EURUSD, USDJPY', bot: 'BAv3 / BAv3.1' }
 ];
@@ -299,7 +300,9 @@ const botTradeData = [
   { date: '2026-03-27', pnl: -2588, bot: 'BAv3.1', symbol: 'EURUSD' },
   { date: '2026-03-27', pnl: -1285, bot: 'BAv3.1', symbol: 'BTCUSD' },
   { date: '2026-03-27', pnl: -8029, bot: 'BAv3', symbol: 'USDJPY' },
-  { date: '2026-03-28', pnl: -7744, bot: 'BAv3', symbol: 'BTCUSD' }
+  { date: '2026-03-28', pnl: -7744, bot: 'BAv3', symbol: 'BTCUSD' },
+  { date: '2026-03-29', pnl: 2007, bot: 'BAv3', symbol: 'BTCUSD' },
+  { date: '2026-03-29', pnl: -6199, bot: 'BAv3', symbol: 'BTCUSD' }
 ];
 
 // ── Bot別 収益曲線 ──
