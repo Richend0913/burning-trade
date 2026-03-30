@@ -1,7 +1,8 @@
 // ── FX収支データ V3（2026-03-28〜 新デモ口座 4EA並行運用） ──
 // BAv3, BAv3.1, Strategy26_v3, BurningAlpha FINAL
 const fxData = [
-  { date: '2026-03-29', pnl: -4192, trades: 2, wins: 1, pairs: 'BTCUSD', bot: 'BAv3' },
+  { date: '2026-03-30', pnl: -115855, trades: 23, wins: 6, pairs: 'BTCUSD, EURUSD, GBPUSD, XAUUSD', bot: 'BAv3 / BAv3.1 / Manual / S26v3' },
+  { date: '2026-03-29', pnl: 19665, trades: 5, wins: 3, pairs: 'BTCUSD', bot: 'BAv3 / BAv3.1' },
   { date: '2026-03-28', pnl: -7744, trades: 1, wins: 0, pairs: 'BTCUSD', bot: 'BAv3' },
   { date: '2026-03-27', pnl: -11902, trades: 3, wins: 0, pairs: 'BTCUSD, EURUSD, USDJPY', bot: 'BAv3 / BAv3.1' }
 ];
@@ -302,7 +303,33 @@ const botTradeData = [
   { date: '2026-03-27', pnl: -8029, bot: 'BAv3', symbol: 'USDJPY' },
   { date: '2026-03-28', pnl: -7744, bot: 'BAv3', symbol: 'BTCUSD' },
   { date: '2026-03-29', pnl: 2007, bot: 'BAv3', symbol: 'BTCUSD' },
-  { date: '2026-03-29', pnl: -6199, bot: 'BAv3', symbol: 'BTCUSD' }
+  { date: '2026-03-29', pnl: -6199, bot: 'BAv3', symbol: 'BTCUSD' },
+  { date: '2026-03-29', pnl: -276, bot: 'BAv3', symbol: 'BTCUSD' },
+  { date: '2026-03-29', pnl: 5339, bot: 'BAv3.1', symbol: 'BTCUSD' },
+  { date: '2026-03-29', pnl: 18794, bot: 'BAv3', symbol: 'BTCUSD' },
+  { date: '2026-03-30', pnl: -4554, bot: 'BAv3.1', symbol: 'BTCUSD' },
+  { date: '2026-03-30', pnl: -7355, bot: 'BAv3', symbol: 'BTCUSD' },
+  { date: '2026-03-30', pnl: -34, bot: 'BAv3.1', symbol: 'BTCUSD' },
+  { date: '2026-03-30', pnl: -6528, bot: 'BAv3', symbol: 'BTCUSD' },
+  { date: '2026-03-30', pnl: -2202, bot: 'BAv3', symbol: 'EURUSD' },
+  { date: '2026-03-30', pnl: -13095, bot: 'Manual', symbol: 'GBPUSD' },
+  { date: '2026-03-30', pnl: -13095, bot: 'Manual', symbol: 'GBPUSD' },
+  { date: '2026-03-30', pnl: -13095, bot: 'Manual', symbol: 'GBPUSD' },
+  { date: '2026-03-30', pnl: -13095, bot: 'Manual', symbol: 'GBPUSD' },
+  { date: '2026-03-30', pnl: -13095, bot: 'Manual', symbol: 'GBPUSD' },
+  { date: '2026-03-30', pnl: -13095, bot: 'Manual', symbol: 'GBPUSD' },
+  { date: '2026-03-30', pnl: -5110, bot: 'Manual', symbol: 'GBPUSD' },
+  { date: '2026-03-30', pnl: -5110, bot: 'Manual', symbol: 'GBPUSD' },
+  { date: '2026-03-30', pnl: -5110, bot: 'Manual', symbol: 'GBPUSD' },
+  { date: '2026-03-30', pnl: -5110, bot: 'Manual', symbol: 'GBPUSD' },
+  { date: '2026-03-30', pnl: -5110, bot: 'Manual', symbol: 'GBPUSD' },
+  { date: '2026-03-30', pnl: 3833, bot: 'Manual', symbol: 'GBPUSD' },
+  { date: '2026-03-30', pnl: 3513, bot: 'Manual', symbol: 'GBPUSD' },
+  { date: '2026-03-30', pnl: 3513, bot: 'Manual', symbol: 'GBPUSD' },
+  { date: '2026-03-30', pnl: 3513, bot: 'Manual', symbol: 'GBPUSD' },
+  { date: '2026-03-30', pnl: 3513, bot: 'Manual', symbol: 'GBPUSD' },
+  { date: '2026-03-30', pnl: 3513, bot: 'Manual', symbol: 'GBPUSD' },
+  { date: '2026-03-30', pnl: -12460, bot: 'S26v3', symbol: 'XAUUSD' }
 ];
 
 // ── Bot別 収益曲線 ──
