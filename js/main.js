@@ -1,7 +1,7 @@
 // ── FX収支データ V3（2026-03-28〜 新デモ口座 4EA並行運用） ──
 // BAv3, BAv3.1, Strategy26_v3, BurningAlpha FINAL
 const fxData = [
-  { date: '2026-04-02', pnl: -315435046, trades: 297, wins: 1, pairs: 'XAUUSD', bot: 'Manual' },
+  { date: '2026-04-02', pnl: -315540098, trades: 309, wins: 5, pairs: 'XAUUSD', bot: 'Manual' },
   { date: '2026-03-31', pnl: -8884387, trades: 509, wins: 74, pairs: 'BTCUSD, XAUUSD', bot: 'BAv3 / BAv3.1 / Manual / S26v3' },
   { date: '2026-03-30', pnl: -203690, trades: 24, wins: 6, pairs: 'BTCUSD, EURUSD, GBPUSD, XAUUSD', bot: 'BAv3 / BAv3.1 / Manual / S26v3' },
   { date: '2026-03-29', pnl: 19665, trades: 5, wins: 3, pairs: 'BTCUSD', bot: 'BAv3 / BAv3.1' },
@@ -1138,7 +1138,19 @@ const botTradeData = [
   { date: '2026-04-02', pnl: -1230726, bot: 'Manual', symbol: 'XAUUSD' },
   { date: '2026-04-02', pnl: -1223266, bot: 'Manual', symbol: 'XAUUSD' },
   { date: '2026-04-02', pnl: -1219058, bot: 'Manual', symbol: 'XAUUSD' },
-  { date: '2026-04-02', pnl: -1219058, bot: 'Manual', symbol: 'XAUUSD' }
+  { date: '2026-04-02', pnl: -1219058, bot: 'Manual', symbol: 'XAUUSD' },
+  { date: '2026-04-02', pnl: 270020, bot: 'Manual', symbol: 'XAUUSD' },
+  { date: '2026-04-02', pnl: 4909, bot: 'Manual', symbol: 'XAUUSD' },
+  { date: '2026-04-02', pnl: 11412, bot: 'Manual', symbol: 'XAUUSD' },
+  { date: '2026-04-02', pnl: 38860, bot: 'Manual', symbol: 'XAUUSD' },
+  { date: '2026-04-02', pnl: -70976, bot: 'Manual', symbol: 'XAUUSD' },
+  { date: '2026-04-02', pnl: -61984, bot: 'Manual', symbol: 'XAUUSD' },
+  { date: '2026-04-02', pnl: -55416, bot: 'Manual', symbol: 'XAUUSD' },
+  { date: '2026-04-02', pnl: -50792, bot: 'Manual', symbol: 'XAUUSD' },
+  { date: '2026-04-02', pnl: -49549, bot: 'Manual', symbol: 'XAUUSD' },
+  { date: '2026-04-02', pnl: -48210, bot: 'Manual', symbol: 'XAUUSD' },
+  { date: '2026-04-02', pnl: -47508, bot: 'Manual', symbol: 'XAUUSD' },
+  { date: '2026-04-02', pnl: -45818, bot: 'Manual', symbol: 'XAUUSD' }
 ];
 
 // ── Bot別 収益曲線 ──
